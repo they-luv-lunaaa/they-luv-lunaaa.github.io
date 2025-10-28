@@ -1,1 +1,0 @@
-# averageCryptoNerd.github.io
