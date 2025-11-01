@@ -1,13 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="refresh" content="0; url=https://lun4.me">
-  <link rel="canonical" href="https://lun4.me">
-  <title>Redirecting...</title>
+  <meta charset="UTF-8" />
+  <title>Redirecting…</title>
+  <link rel="canonical" href="https://lun4.me" />
+  <meta name="robots" content="noindex" />
 </head>
 <body>
-  <p>Redirecting to <a href="https://lun4.me">lun4.me</a>...</p>
-  <script>location.href="https://lun4.me"</script>
+  <p>Redirecting to <a href="https://lun4.me">lun4.me</a>…</p>
+
+  <script>
+    (function() {
+      const target = "https://lun4.me";
+
+      // Only redirect if hosted on GitHub Pages or a lun4.me subdomain
+      const host = location.hostname;
+      const isLocal = host === "localhost" || host === "127.0.0.1" || host === "";
+      const isGitHubPages = host.endsWith(".github.io") || host.endsWith("lun4.me");
+
+      if (!isLocal && isGitHubPages && host !== "lun4.me") {
+        location.replace(target + location.pathname + location.search + location.hash);
+      }
+    })();
+  </script>
 </body>
 </html>
