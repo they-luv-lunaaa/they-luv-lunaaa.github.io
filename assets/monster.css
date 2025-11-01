@@ -1,102 +1,74 @@
-/* monster.css */
-
-/* Import Nabla font */
-@import url('https://fonts.googleapis.com/css2?family=Nabla&display=swap');
-
-/* Base layout */
-body {
-  margin: 0;
-  padding: 0;
-  font-family: 'Nabla', cursive;
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: radial-gradient(ellipse at 10% 10%, rgba(31,198,0,0.06) 0%, transparent 10%),
-              linear-gradient(180deg, #0b0f17 0%, #060507 100%);
-  overflow: hidden;
-  position: relative;
-  color: #fff;
-}
-
-/* Scene wrapper */
+/* Container for all scene elements */
 .scene {
   position: relative;
-  width: 100%;
-  height: 100%;
+  width: 520px;
+  height: 180px;
+  margin: 0 auto;
 }
 
-/* Monster can */
+/* Monster can with image */
 .monster-can {
   position: absolute;
-  right: 15vw;
-  bottom: 15vh;
-  width: 60px;
-  height: 140px;
-  background: linear-gradient(to bottom, #1fc600 0%, #00ff00 100%);
+  right: 60px;      /* Adjust horizontal */
+  bottom: 0;
+  width: 80px;      /* Adjust size */
+  height: 160px;
+  background: url('assets/monster-can.png') no-repeat center/contain;
   border-radius: 12px;
-  box-shadow: 0 4px 18px rgba(31,198,0,0.5), 0 0 12px rgba(31,198,0,0.3) inset;
+  box-shadow: 0 4px 18px rgba(31,198,0,0.7), 0 0 12px rgba(31,198,0,0.4) inset;
   animation: glowCan 2s infinite alternate;
+  z-index: 10;
 }
 
-/* Glow animation for can */
-@keyframes glowCan {
-  0% { box-shadow: 0 4px 18px rgba(31,198,0,0.5), 0 0 12px rgba(31,198,0,0.3) inset; }
-  50% { box-shadow: 0 6px 28px rgba(31,198,0,0.8), 0 0 18px rgba(31,198,0,0.6) inset; }
-  100% { box-shadow: 0 4px 18px rgba(31,198,0,0.5), 0 0 12px rgba(31,198,0,0.3) inset; }
-}
-
-/* Pumpkin and Ghost */
+/* Pumpkin and ghost styling */
 .pumpkin, .ghost {
   position: absolute;
-  font-size: 40px;
-  animation: floaty 4s ease-in-out infinite;
+  font-size: 48px;
+  z-index: 15;
+  filter: drop-shadow(0 0 2px rgba(0,0,0,0.4));
 }
 
-/* Positioning */
-.pumpkin { left: 20vw; bottom: 25vh; animation-delay: 0s; }
-.ghost { left: 25vw; bottom: 15vh; animation-delay: 1s; }
-
-/* Float animation */
-@keyframes floaty {
-  0% { transform: translateY(0) translateX(0) rotate(0deg); }
-  50% { transform: translateY(-10px) translateX(6px) rotate(-5deg); }
-  100% { transform: translateY(0) translateX(0) rotate(0deg); }
+/* Position pumpkin left */
+.pumpkin {
+  left: 0;
+  bottom: 30px;
 }
 
-/* Straws: connecting pumpkin/ghost to can */
-.pumpkin::after, .ghost::after {
+/* Position ghost a bit right and lower */
+.ghost {
+  left: 80px;
+  bottom: 10px;
+}
+
+/* Straws: using pseudo-elements */
+.pumpkin::after,
+.ghost::after {
   content: '';
   position: absolute;
-  width: 2px;
-  height: 50px;
-  background: #1fc600;
-  top: 0;
-  left: 50%;
+  width: 3px;
+  height: 40px;
+  background: #1FC600;  /* Monster green */
+  border-radius: 2px;
   transform-origin: top left;
-  animation: strawDrink 2s infinite alternate;
-  box-shadow: 0 0 6px #1fc600;
+  filter: drop-shadow(0 0 3px #1FC600);
 }
 
-/* Straw “sipping” animation */
-@keyframes strawDrink {
-  0% { height: 50px; transform: rotate(20deg); }
-  50% { height: 30px; transform: rotate(20deg); }
-  100% { height: 50px; transform: rotate(20deg); }
+/* Pumpkin straw */
+.pumpkin::after {
+  left: 25px; /* Adjust for pumpkin */
+  top: -35px;
+  transform: rotate(25deg);
 }
 
-/* Tilt pumpkin/ghost toward can while drinking */
-.pumpkin { animation: floatyPumpkin 4s ease-in-out infinite; }
-.ghost { animation: floatyGhost 4s ease-in-out infinite; }
-
-@keyframes floatyPumpkin {
-  0% { transform: translateY(0) translateX(0) rotate(0deg); }
-  50% { transform: translateY(-10px) translateX(6px) rotate(-15deg); }
-  100% { transform: translateY(0) translateX(0) rotate(0deg); }
+/* Ghost straw */
+.ghost::after {
+  left: 20px; /* Adjust for ghost */
+  top: -40px;
+  transform: rotate(15deg);
 }
 
-@keyframes floatyGhost {
-  0% { transform: translateY(0) translateX(0) rotate(0deg); }
-  50% { transform: translateY(-8px) translateX(4px) rotate(15deg); }
-  100% { transform: translateY(0) translateX(0) rotate(0deg); }
+/* Animation for can glowing */
+@keyframes glowCan {
+  0% { box-shadow: 0 4px 18px rgba(31,198,0,0.7), 0 0 12px rgba(31,198,0,0.4) inset; }
+  100% { box-shadow: 0 6px 24px rgba(31,198,0,0.9), 0 0 18px rgba(31,198,0,0.6) inset; }
 }
