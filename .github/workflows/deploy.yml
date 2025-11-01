@@ -1,0 +1,33 @@
+name: Auto Deploy to GitHub Pages
+
+on:
+  push:
+    branches:
+      - main   # Trigger deployment when you push to main
+
+permissions:
+  contents: write
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v4
+
+      # If you use a build tool (uncomment below)
+      # - name: Build the site
+      #   run: |
+      #     npm install
+      #     npm run build
+
+      - name: Add CNAME for custom domain
+        run: |
+          echo "lun4.me" > CNAME
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./   # or ./dist if you build
