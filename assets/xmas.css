@@ -1,0 +1,152 @@
+@import url('https://fonts.googleapis.com/css2?family=Mountains+of+Christmas:wght@700&family=Inter:wght@300;400;600;700&display=swap');
+
+/* Base layout */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { height: 100%; }
+body {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 28px;
+  font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  background: radial-gradient(circle at 20% 20%, rgba(255,255,255,0.08) 0%, transparent 15%),
+              linear-gradient(180deg, #0a1b26 0%, #041018 100%);
+  color: #f7f7f7;
+  overflow: hidden;
+}
+
+/* Decorative glowing moon -> glowing snowflake */
+body::before {
+  content: '';
+  position: absolute;
+  left: -8vw;
+  top: -8vh;
+  width: 45vh;
+  height: 45vh;
+  background: radial-gradient(circle at 30% 30%, #fff0d9 0%, #ff3b3b 40%, rgba(255,255,255,0.05) 60%);
+  filter: blur(40px) saturate(140%);
+  opacity: 0.5;
+  transform: rotate(-6deg);
+  pointer-events: none;
+}
+
+/* Floating ghost & pumpkin with lil Santa hats 🎅 */
+body::after {
+  content: '👻🎅 🎃🎅';
+  position: absolute;
+  right: 8vw;
+  bottom: 6vh;
+  font-size: 36px;
+  opacity: 0.1;
+  transform: translateY(0);
+  animation: floaty 6s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes floaty {
+  0% { transform: translateY(0) translateX(0);} 
+  50% { transform: translateY(-18px) translateX(-8px);} 
+  100% { transform: translateY(0) translateX(0);} 
+}
+
+/* Card */
+.profile-card {
+  position: relative;
+  z-index: 2;
+  max-width: 520px;
+  width: 100%;
+  padding: 44px 36px;
+  border-radius: 20px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03));
+  border: 1px solid rgba(255,255,255,0.08);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.6), 0 0 40px rgba(255,0,0,0.05) inset;
+  text-align: center;
+  backdrop-filter: blur(8px) saturate(140%);
+  animation: cardPop 0.6s cubic-bezier(.2,.9,.2,1);
+}
+
+@keyframes cardPop { from {opacity:0; transform: translateY(18px);} to {opacity:1; transform: translateY(0);} }
+
+.profile-image { 
+  width: 140px; height: 140px; border-radius: 50%; margin: 0 auto 22px; 
+  overflow: hidden; 
+  border: 6px solid rgba(255,0,0,0.25); 
+  box-shadow: 0 8px 30px rgba(0,255,0,0.08); 
+}
+.profile-image img { width:100%; height:100%; object-fit:cover; display:block; }
+
+/* Xmas typography */
+h1 { 
+  font-family: 'Mountains of Christmas', cursive; 
+  font-size: 38px; 
+  letter-spacing: 1px; 
+  color: #ff4c4c; 
+  margin-bottom: 6px; 
+  text-shadow: 0 2px 10px rgba(255,255,255,0.25), 0 0 20px rgba(255,0,0,0.2);
+  animation: twinkle 5s infinite;
+}
+
+.handle { color: #d9f7e6; opacity: 0.95; margin-bottom: 6px; font-weight: 600; }
+.handle.description { color: #fffbe8; font-style: italic; opacity:0.9; font-weight:400 }
+
+/* Tags -> Xmas candy tags 🍬 */
+.tags { display:flex; gap:12px; justify-content:center; flex-wrap:wrap; margin:22px 0; }
+.tag { 
+  background: linear-gradient(90deg,#ff0000,#00b341); 
+  color: #fff; 
+  padding: 8px 18px; 
+  border-radius: 999px; 
+  font-weight:700; 
+  box-shadow: 0 6px 18px rgba(255,0,0,0.12); 
+  transform-origin:center; 
+  transition:transform .18s ease, box-shadow .18s ease; 
+}
+.tag:hover { transform: translateY(-6px) scale(1.05); box-shadow: 0 12px 32px rgba(255,255,255,0.2); }
+
+/* Social links styled as Xmas ornaments 🎄 */
+.social-links { display:flex; gap:14px; justify-content:center; margin-top:18px }
+.social-link { 
+  width:48px; height:48px; border-radius:50%; 
+  display:inline-flex; align-items:center; justify-content:center; 
+  background: radial-gradient(circle at 30% 30%, #d62828, #6a040f);
+  color:#f5e7b2;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.6), 0 0 18px rgba(255,255,255,0.05) inset;
+  border:1px solid rgba(255,255,255,0.1);
+  transition: transform .18s ease, box-shadow .18s ease; 
+}
+.social-link svg { width:22px; height:22px; }
+.social-link:hover { 
+  transform: translateY(-6px) rotate(-3deg);
+  box-shadow: 0 14px 34px rgba(255,255,255,0.25), 0 0 24px rgba(255,0,0,0.08) inset; 
+  color:#fff; 
+}
+
+/* Twinkling lights animation */
+@keyframes twinkle {
+  0%, 100% { text-shadow: 0 0 8px #ff4c4c, 0 0 16px #ffea8b; }
+  50% { text-shadow: 0 0 14px #00ff9c, 0 0 30px #fff; }
+}
+
+/* Snowfall effect */
+@keyframes snow {
+  0% { transform: translateY(-10px); opacity: 1; }
+  100% { transform: translateY(100vh); opacity: 0; }
+}
+
+body::before,
+body::after {
+  animation: floaty 6s ease-in-out infinite;
+}
+
+/* Responsive */
+@media (max-width: 576px) {
+  .profile-card { padding: 28px; }
+  h1 { font-size: 32px; }
+  .profile-image { width: 120px; height: 120px; }
+}
+
+/* Accessibility: reduce motion */
+@media (prefers-reduced-motion: reduce) {
+  * { animation: none !important; transition: none !important; }
+}
