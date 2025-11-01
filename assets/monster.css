@@ -1,74 +1,182 @@
-/* Container for all scene elements */
-.scene {
-  position: relative;
-  width: 520px;
-  height: 180px;
-  margin: 0 auto;
+@import url('https://fonts.googleapis.com/css2?family=Nabla&display=swap');
+
+/* Base layout */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html,body { height: 100%; }
+body {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 28px;
+  font-family: 'Nabla', cursive, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  background: radial-gradient(ellipse at 10% 10%, rgba(255,140,0,0.06) 0%, transparent 10%),
+              linear-gradient(180deg, #0b0f17 0%, #060507 100%);
+  color: #f7f7f7;
+  overflow: hidden;
 }
 
-/* Monster can with image */
-.monster-can {
-  position: absolute;
-  right: 60px;      /* Adjust horizontal */
-  bottom: 0;
-  width: 80px;      /* Adjust size */
-  height: 160px;
-  background: url('assets/monster-can.png') no-repeat center/contain;
-  border-radius: 12px;
-  box-shadow: 0 4px 18px rgba(31,198,0,0.7), 0 0 12px rgba(31,198,0,0.4) inset;
-  animation: glowCan 2s infinite alternate;
-  z-index: 10;
-}
-
-/* Pumpkin and ghost styling */
-.pumpkin, .ghost {
-  position: absolute;
-  font-size: 48px;
-  z-index: 15;
-  filter: drop-shadow(0 0 2px rgba(0,0,0,0.4));
-}
-
-/* Position pumpkin left */
-.pumpkin {
-  left: 0;
-  bottom: 30px;
-}
-
-/* Position ghost a bit right and lower */
-.ghost {
-  left: 80px;
-  bottom: 10px;
-}
-
-/* Straws: using pseudo-elements */
-.pumpkin::after,
-.ghost::after {
+/* Decorative moon */
+body::before {
   content: '';
   position: absolute;
-  width: 3px;
-  height: 40px;
-  background: #1FC600;  /* Monster green */
-  border-radius: 2px;
-  transform-origin: top left;
-  filter: drop-shadow(0 0 3px #1FC600);
+  left: -8vw;
+  top: -8vh;
+  width: 45vh;
+  height: 45vh;
+  background: radial-gradient(circle at 30% 30%, #ffd89b 0%, #ff8c00 40%, rgba(255,140,0,0.06) 60%);
+  filter: blur(30px) saturate(120%);
+  opacity: 0.5;
+  transform: rotate(-6deg);
+  pointer-events: none;
 }
 
-/* Pumpkin straw */
-.pumpkin::after {
-  left: 25px; /* Adjust for pumpkin */
-  top: -35px;
-  transform: rotate(25deg);
+/* Floating ghost & pumpkin decorations */
+body::after {
+  content: '👻 🎃';
+  position: absolute;
+  right: 8vw;
+  bottom: 6vh;
+  font-size: 36px;
+  opacity: 0.08;
+  transform: translateY(0);
+  animation: floaty 6s ease-in-out infinite;
+  pointer-events: none;
 }
 
-/* Ghost straw */
-.ghost::after {
-  left: 20px; /* Adjust for ghost */
-  top: -40px;
-  transform: rotate(15deg);
+@keyframes floaty {
+  0% { transform: translateY(0) translateX(0);} 
+  50% { transform: translateY(-18px) translateX(-8px);} 
+  100% { transform: translateY(0) translateX(0);} 
 }
 
-/* Animation for can glowing */
-@keyframes glowCan {
-  0% { box-shadow: 0 4px 18px rgba(31,198,0,0.7), 0 0 12px rgba(31,198,0,0.4) inset; }
-  100% { box-shadow: 0 6px 24px rgba(31,198,0,0.9), 0 0 18px rgba(31,198,0,0.6) inset; }
+/* Card */
+.profile-card {
+  position: relative;
+  z-index: 2;
+  max-width: 520px;
+  width: 100%;
+  padding: 44px 36px;
+  border-radius: 20px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.02));
+  border: 1px solid rgba(255,140,0,0.06);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.6), 0 0 40px rgba(255,140,0,0.02) inset;
+  text-align: center;
+  backdrop-filter: blur(6px) saturate(120%);
+  animation: cardPop 0.6s cubic-bezier(.2,.9,.2,1);
+}
+
+@keyframes cardPop { from {opacity:0; transform: translateY(18px);} to {opacity:1; transform: translateY(0);} }
+
+.profile-image { 
+  width: 140px; 
+  height: 140px; 
+  border-radius: 50%; 
+  margin: 0 auto 22px; 
+  overflow: hidden; 
+  border: 6px solid rgba(255,140,0,0.18); 
+  box-shadow: 0 8px 30px rgba(255,140,0,0.06); 
+}
+.profile-image img { 
+  width:100%; 
+  height:100%; 
+  object-fit:cover; 
+  display:block; 
+}
+
+h1 { 
+  font-family: 'Nabla', cursive;
+  font-size: 36px; 
+  letter-spacing: 1px; 
+  color: #ffb86b; 
+  margin-bottom: 6px; 
+  text-shadow: 0 2px 8px rgba(0,0,0,0.6); 
+  animation: spookyFlicker 5s infinite;
+}
+
+.handle { 
+  font-family: 'Nabla', cursive;
+  color: #dfe6ee; 
+  opacity: 0.95; 
+  margin-bottom: 6px; 
+  font-weight: 600; 
+}
+
+.handle.description { 
+  font-family: 'Nabla', cursive;
+  color: #e6d9c1; 
+  font-style: italic; 
+  opacity:0.9; 
+  font-weight:400;
+}
+
+/* Tags (re-use class if present) */
+.tags { 
+  display:flex; 
+  gap:12px; 
+  justify-content:center; 
+  flex-wrap:wrap; 
+  margin:22px 0; 
+}
+.tag { 
+  background: linear-gradient(90deg,#ff8c00,#ff5e50); 
+  color: #fff; 
+  padding: 8px 18px; 
+  border-radius: 999px; 
+  font-weight:700; 
+  box-shadow: 0 6px 18px rgba(255,110,40,0.12); 
+  transform-origin:center; 
+  transition:transform .18s ease, box-shadow .18s ease; 
+}
+.tag:hover { 
+  transform: translateY(-6px) scale(1.02); 
+  box-shadow: 0 12px 32px rgba(255,110,40,0.18); 
+}
+
+/* Social links styled as lanterns */
+.social-links { 
+  display:flex; 
+  gap:14px; 
+  justify-content:center; 
+  margin-top:18px;
+}
+.social-link { 
+  width:48px; 
+  height:48px; 
+  border-radius:12px; 
+  display:inline-flex; 
+  align-items:center; 
+  justify-content:center; 
+  background: linear-gradient(180deg,#2b2733,#241f2a); 
+  color:#ffcb8b; 
+  box-shadow: 0 6px 18px rgba(0,0,0,0.6), 0 0 18px rgba(255,140,0,0.03) inset; 
+  border:1px solid rgba(255,140,0,0.05); 
+  transition: transform .18s ease, box-shadow .18s ease; 
+}
+.social-link svg { 
+  width:22px; 
+  height:22px; 
+}
+.social-link:hover { 
+  transform: translateY(-6px); 
+  box-shadow: 0 14px 34px rgba(255,110,40,0.18), 0 0 24px rgba(255,140,0,0.08) inset; 
+  color:#fff; 
+}
+
+/* Small flicker animation for headings */
+@keyframes spookyFlicker { 
+  0%, 19%, 21%, 50%, 100% { opacity: 1; } 
+  20%, 22%, 49% { opacity: 0.85; } 
+}
+
+/* Responsive */
+@media (max-width: 576px) {
+  .profile-card { padding: 28px; }
+  h1 { font-size: 30px; }
+  .profile-image { width: 120px; height: 120px; }
+}
+
+/* Accessibility: reduce motion */
+@media (prefers-reduced-motion: reduce) {
+  * { animation: none !important; transition: none !important; }
 }
