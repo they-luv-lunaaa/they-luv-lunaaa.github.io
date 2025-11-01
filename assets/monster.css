@@ -1,11 +1,20 @@
 @import url('https://fonts.googleapis.com/css2?family=Nabla&display=swap');
 
 /* Base layout */
-* { box-sizing: border-box; margin: 0; padding: 0; }
-html,body { height: 100%; }
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  height: 100%;
+}
+
 body {
   min-height: 100vh;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   padding: 28px;
@@ -16,22 +25,7 @@ body {
   overflow: hidden;
 }
 
-/* Decorative moon */
-body::before {
-  content: '';
-  position: absolute;
-  left: -8vw;
-  top: -8vh;
-  width: 45vh;
-  height: 45vh;
-  background: radial-gradient(circle at 30% 30%, #ffd89b 0%, #ff8c00 40%, rgba(255,140,0,0.06) 60%);
-  filter: blur(30px) saturate(120%);
-  opacity: 0.5;
-  transform: rotate(-6deg);
-  pointer-events: none;
-}
-
-/* Floating ghost & pumpkin decorations */
+/* Decorative floating emoji */
 body::after {
   content: '👻 🎃';
   position: absolute;
@@ -39,18 +33,63 @@ body::after {
   bottom: 6vh;
   font-size: 36px;
   opacity: 0.08;
-  transform: translateY(0);
   animation: floaty 6s ease-in-out infinite;
   pointer-events: none;
 }
 
 @keyframes floaty {
-  0% { transform: translateY(0) translateX(0);} 
-  50% { transform: translateY(-18px) translateX(-8px);} 
-  100% { transform: translateY(0) translateX(0);} 
+  0% { transform: translateY(0) translateX(0); }
+  50% { transform: translateY(-18px) translateX(-8px); }
+  100% { transform: translateY(0) translateX(0); }
 }
 
-/* Card */
+/* Monster scene */
+.scene {
+  position: relative;
+  width: 200px;
+  height: 300px;
+  margin-bottom: 40px;
+}
+
+.monster-can {
+  width: 100px;
+  height: 200px;
+  background-image: url('assets/monster-sheet.png'); /* replace with your sprite sheet */
+  background-size: cover;
+  background-position: center;
+  margin: 0 auto;
+  animation: sipCan 4s infinite;
+}
+
+@keyframes sipCan {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-8px) rotate(-4deg); }
+}
+
+.pumpkin, .ghost {
+  position: absolute;
+  font-size: 32px;
+  animation: floatUpDown 3s ease-in-out infinite;
+}
+
+.pumpkin {
+  left: -40px;
+  bottom: 20px;
+  animation-delay: 0s;
+}
+
+.ghost {
+  right: -40px;
+  bottom: 60px;
+  animation-delay: 1.5s;
+}
+
+@keyframes floatUpDown {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-12px); }
+}
+
+/* Profile card */
 .profile-card {
   position: relative;
   z-index: 2;
@@ -66,107 +105,57 @@ body::after {
   animation: cardPop 0.6s cubic-bezier(.2,.9,.2,1);
 }
 
-@keyframes cardPop { from {opacity:0; transform: translateY(18px);} to {opacity:1; transform: translateY(0);} }
-
-.profile-image { 
-  width: 140px; 
-  height: 140px; 
-  border-radius: 50%; 
-  margin: 0 auto 22px; 
-  overflow: hidden; 
-  border: 6px solid rgba(255,140,0,0.18); 
-  box-shadow: 0 8px 30px rgba(255,140,0,0.06); 
-}
-.profile-image img { 
-  width:100%; 
-  height:100%; 
-  object-fit:cover; 
-  display:block; 
+@keyframes cardPop {
+  from { opacity: 0; transform: translateY(18px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
-h1 { 
+.profile-image {
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  margin: 0 auto 22px;
+  overflow: hidden;
+  border: 6px solid rgba(255,140,0,0.18);
+  box-shadow: 0 8px 30px rgba(255,140,0,0.06);
+}
+
+.profile-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+h1 {
   font-family: 'Nabla', cursive;
-  font-size: 36px; 
-  letter-spacing: 1px; 
-  color: #ffb86b; 
-  margin-bottom: 6px; 
-  text-shadow: 0 2px 8px rgba(0,0,0,0.6); 
+  font-size: 36px;
+  letter-spacing: 1px;
+  color: #ffb86b;
+  margin-bottom: 6px;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.6);
   animation: spookyFlicker 5s infinite;
 }
 
-.handle { 
+.handle {
   font-family: 'Nabla', cursive;
-  color: #dfe6ee; 
-  opacity: 0.95; 
-  margin-bottom: 6px; 
-  font-weight: 600; 
+  color: #dfe6ee;
+  opacity: 0.95;
+  margin-bottom: 6px;
+  font-weight: 600;
 }
 
-.handle.description { 
+.handle.description {
   font-family: 'Nabla', cursive;
-  color: #e6d9c1; 
-  font-style: italic; 
-  opacity:0.9; 
-  font-weight:400;
+  color: #e6d9c1;
+  font-style: italic;
+  opacity: 0.9;
+  font-weight: 400;
 }
 
-/* Tags (re-use class if present) */
-.tags { 
-  display:flex; 
-  gap:12px; 
-  justify-content:center; 
-  flex-wrap:wrap; 
-  margin:22px 0; 
-}
-.tag { 
-  background: linear-gradient(90deg,#ff8c00,#ff5e50); 
-  color: #fff; 
-  padding: 8px 18px; 
-  border-radius: 999px; 
-  font-weight:700; 
-  box-shadow: 0 6px 18px rgba(255,110,40,0.12); 
-  transform-origin:center; 
-  transition:transform .18s ease, box-shadow .18s ease; 
-}
-.tag:hover { 
-  transform: translateY(-6px) scale(1.02); 
-  box-shadow: 0 12px 32px rgba(255,110,40,0.18); 
-}
-
-/* Social links styled as lanterns */
-.social-links { 
-  display:flex; 
-  gap:14px; 
-  justify-content:center; 
-  margin-top:18px;
-}
-.social-link { 
-  width:48px; 
-  height:48px; 
-  border-radius:12px; 
-  display:inline-flex; 
-  align-items:center; 
-  justify-content:center; 
-  background: linear-gradient(180deg,#2b2733,#241f2a); 
-  color:#ffcb8b; 
-  box-shadow: 0 6px 18px rgba(0,0,0,0.6), 0 0 18px rgba(255,140,0,0.03) inset; 
-  border:1px solid rgba(255,140,0,0.05); 
-  transition: transform .18s ease, box-shadow .18s ease; 
-}
-.social-link svg { 
-  width:22px; 
-  height:22px; 
-}
-.social-link:hover { 
-  transform: translateY(-6px); 
-  box-shadow: 0 14px 34px rgba(255,110,40,0.18), 0 0 24px rgba(255,140,0,0.08) inset; 
-  color:#fff; 
-}
-
-/* Small flicker animation for headings */
-@keyframes spookyFlicker { 
-  0%, 19%, 21%, 50%, 100% { opacity: 1; } 
-  20%, 22%, 49% { opacity: 0.85; } 
+@keyframes spookyFlicker {
+  0%, 19%, 21%, 50%, 100% { opacity: 1; }
+  20%, 22%, 49% { opacity: 0.85; }
 }
 
 /* Responsive */
@@ -174,9 +163,4 @@ h1 {
   .profile-card { padding: 28px; }
   h1 { font-size: 30px; }
   .profile-image { width: 120px; height: 120px; }
-}
-
-/* Accessibility: reduce motion */
-@media (prefers-reduced-motion: reduce) {
-  * { animation: none !important; transition: none !important; }
 }
